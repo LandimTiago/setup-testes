@@ -1,0 +1,16 @@
+{
+  "name": "setuptestes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/service.js",
+    "test": "node --test test/",
+    "test:coverage": "node --experimental-test-coverage --test test/",
+    "test:debuger": "node --inspect --watch --test test/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
