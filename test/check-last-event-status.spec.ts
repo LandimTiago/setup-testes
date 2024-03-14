@@ -33,13 +33,13 @@ interface LoadLastEventRepository {
 class LoadLastEventRepositorySpy implements LoadLastEventRepository {
   groupId?: string;
   callsCount = 0;
-  output: { endDate: Date } | undefined;
+  output: { endDate: Date; reviewDurationInHours?: number } | undefined;
 
   async loadLastEvent({
     groupId,
   }: {
     groupId: string;
-  }): Promise<{ endDate: Date } | undefined> {
+  }): Promise<{ endDate: Date; reviewDurationInHours?: number } | undefined> {
     this.groupId = groupId;
     this.callsCount++;
 
@@ -121,6 +121,21 @@ describe("CheckEventLastStatus", () => {
     const { sut, loadLastEventRepository } = makeSUT();
     loadLastEventRepository.output = {
       endDate: new Date(new Date().getTime() - 1),
+    };
+
+    const status = await sut.perform({ groupId });
+
+    expect(status).toBe("inReview");
+  });
+
+  it("Should return status inReview when now is before review time", async () => {
+    const reviewDurationInHours = 1;
+    const reviewDurationInMs = reviewDurationInHours * 60 * 60 * 1000;
+
+    const { sut, loadLastEventRepository } = makeSUT();
+    loadLastEventRepository.output = {
+      endDate: new Date(new Date().getTime() - reviewDurationInMs + 1),
+      reviewDurationInHours,
     };
 
     const status = await sut.perform({ groupId });
