@@ -1,12 +1,13 @@
 import { reset, set } from "mockdate";
 
+type EventStatus = "active" | "done" | "inReview";
 // Use Case
 class CheckEventLastStatus {
   constructor(
     private readonly loadLastEventRepository: LoadLastEventRepository
   ) {}
 
-  async perform({ groupId }: { groupId: string }): Promise<string> {
+  async perform({ groupId }: { groupId: string }): Promise<EventStatus> {
     const now = new Date();
     const event = await this.loadLastEventRepository.loadLastEvent({ groupId });
 
