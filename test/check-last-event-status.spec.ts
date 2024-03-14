@@ -28,12 +28,24 @@ class LoadLastEventRepositorySpy implements LoadLastEventRepository {
   }
 }
 
+type SutOutput = {
+  sut: CheckEventLastStatus;
+  loadLastEventRepository: LoadLastEventRepositorySpy;
+};
+const makeSUT = (): SutOutput => {
+  // Arrange
+  const loadLastEventRepository = new LoadLastEventRepositorySpy();
+  // Por convenção a classe a ser testada se chama SUT ( System Under Test )
+  const sut = new CheckEventLastStatus(loadLastEventRepository);
+
+  return { sut, loadLastEventRepository };
+};
+
 describe("CheckEventLastStatus", () => {
   it(" Should get last event data ", async () => {
     // Arrange
-    const loadLastEventRepository = new LoadLastEventRepositorySpy();
-    // Por convenção a classe a ser testada se chama SUT ( System Under Test )
-    const sut = new CheckEventLastStatus(loadLastEventRepository);
+    // Por convenção a class a ser testada se chama SUT ( System Under Test )
+    const { sut, loadLastEventRepository } = makeSUT();
 
     // Act
     await sut.perform("any_group_id");
@@ -47,10 +59,8 @@ describe("CheckEventLastStatus", () => {
 
   it(" Should return status done when group has no event", async () => {
     // Arrange
-    const loadLastEventRepository = new LoadLastEventRepositorySpy();
-    loadLastEventRepository.output = undefined;
     // Por convenção a class a ser testada se chama SUT ( System Under Test )
-    const sut = new CheckEventLastStatus(loadLastEventRepository);
+    const { sut } = makeSUT();
 
     // Act
     const status = await sut.perform("any_group_id");
