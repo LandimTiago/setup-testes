@@ -18,6 +18,7 @@
 - Dependence injection (DI)
 - Repository Pattern
 - Test Doubles
+- Factory Pattern
 
 - Small Commits
 - System Under Test
