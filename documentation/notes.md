@@ -5,6 +5,7 @@
 - Divergent Change: Alterar o arquivo por mais de um motivo
 - Improper Instantiation: Criar instancias de forma errada
 - High Coupling
+- Replicate Code (DRY: Don't Repeat Yourself)
 
 # Design Patterns/Principles/Conventions
 
