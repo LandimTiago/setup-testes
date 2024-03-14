@@ -8,7 +8,7 @@
     "dev": "node --watch src/service.js",
     "test": "node --test test/",
     "test:coverage": "node --experimental-test-coverage --test test/",
-    "test:debuger": "node --inspect --watch --test test/"
+    "test:debug": "node --inspect --watch --test test/"
   },
   "keywords": [],
   "author": "",
